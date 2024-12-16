@@ -4,6 +4,7 @@ import hmac
 import hashlib
 import json
 import sys
+
 set_token=os.environ.get("TOKEN")
 set_app_secret=os.environ.get("APP_SECRET")
 message_to_print=os.environ.get("USER")
@@ -54,4 +55,4 @@ def handle_webhook():
     return 'OK', 200 
 
 if __name__=='__main__':
-    app.run
+    app.run()

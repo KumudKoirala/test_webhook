@@ -20,7 +20,9 @@ def is_x_hub_valid():
         request.data,  # Use the raw payload (body) as the data to hash
         hashlib.sha256
     ).hexdigest()
-    app.logger.info(f"the signature is {signature}")
+    print(f"Received signature: {signature}")
+    print(f"Computed signature: {computed_signature}")
+    sys.stdout.flush()
     return hmac.compare_digest(computed_signature, signature)
     
 app=Flask(__name__)

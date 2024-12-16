@@ -50,9 +50,9 @@ def handle_webhook():
         return 'Unauthorized', 401
     print('X-Hub-Signature validated')
     
-    if not request.json.get('entry') or not isinstance(request.json['entry'], list):
-        app.logger.info('Invalid update format')
-        return 'Bad Request', 400
+    # if not request.json.get('entry') or not isinstance(request.json['entry'], list):
+    #     app.logger.info('Invalid update format')
+    #     return 'Bad Request', 400
     received_updates.insert(0, request.json)
     app.logger.info('Update received and saved')
     return 'OK', 200 

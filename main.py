@@ -19,8 +19,7 @@ def is_x_hub_valid():
         request.data,  # Use the raw payload (body) as the data to hash
         hashlib.sha256
     ).hexdigest()
-    print(f"the signature is {signature}")
-    sys.stdout.flush()
+    app.logger.info(f"the signature is {signature}")
     return hmac.compare_digest(computed_signature, signature)
     
 app=Flask(__name__)
@@ -33,30 +32,25 @@ def show_updates():
 def verify_webhook():
     set_token=os.environ.get("TOKEN")
     if request.args.get('hub.mode') == 'subscribe' and request.args.get('hub.verify_token') == set_token:
-        print('Webhook verifed')
-        sys.stdout.flush()
+        app.logger.info('Webhook verifed')
         return request.args.get('hub.challenge')
     else:
-        print('Webhook Not verifed')
-        sys.stdout.flush()
+        app.logger.info('Webhook Not verifed')
         return 'Bad Request',400
        
 @app.route('/webhook',methods=["POST"])
 def handle_webhook():
     print('Facebook request body:', request.json)
     if not is_x_hub_valid():
-        print('Warning - request header X-Hub-Signature not present or invalid')
-        sys.stdout.flush()
+        app.logger.info('Warning - request header X-Hub-Signature not present or invalid')
         return 'Unauthorized', 401
     print('X-Hub-Signature validated')
     
     if not request.json.get('entry') or not isinstance(request.json['entry'], list):
-        print('Invalid update format')
-        sys.stdout.flush()
+        app.logger.info('Invalid update format')
         return 'Bad Request', 400
     received_updates.insert(0, request.json)
-    print('Update received and saved')
-    sys.stdout.flush()
+    app.logger.info('Update received and saved')
     return 'OK', 200 
 
 if __name__=='__main__':

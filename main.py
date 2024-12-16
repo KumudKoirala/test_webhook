@@ -46,7 +46,7 @@ def handle_webhook():
     if not request.json.get('entry') or not isinstance(request.json['entry'], list):
         print('Invalid update format')
         return 'Bad Request', 400
-    received_updates.insert(0, request.json)
+    received_updates.insert(0, {'A':'hello'})
     print('Update received and saved')
     return 'OK', 200 
 

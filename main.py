@@ -11,6 +11,7 @@ def home():
 
 @app.route('/webhook',methods=["GET","POST"])
 def index():
+    set_token=os.environ.get("TOKEN")
     if 'hub.mode' in request.args:
         mode=request.args.get('hub.mode')
     if 'hub.verify_token' in request.args:

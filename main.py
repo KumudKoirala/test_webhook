@@ -13,9 +13,9 @@ def is_x_hub_valid():
     signature = request.headers.get('X-Hub-Signature-256')
     if not signature:
         return False
-    signature=signature[len("sha256=")]
+    signature=signature[len("sha256="):]
     computed_signature = hmac.new(
-        APP_SECRET.encode(),
+        set_app_secret.encode(),
         request.data,  # Use the raw payload (body) as the data to hash
         hashlib.sha256
     ).hexdigest()

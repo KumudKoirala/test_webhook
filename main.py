@@ -9,13 +9,17 @@ message_to_print=os.environ.get("USER")
 received_updates = [] 
 
 def is_x_hub_valid():
-    signature = request.headers.get('X-Hub-Signature')
+    signature = request.headers.get('X-Hub-Signature-256')
     if not signature:
         return False
-    hash = hmac.new(APP_SECRET.encode(), json.dumps(request.get_json()).encode(), hashlib.sha1)
-    calculated_signature = f"sha1={hash.hexdigest()}"
-    
-    return signature == calculated_signature ## compare and return the boolean
+    signature=signature[len("sha256=")]
+    computed_signature = hmac.new(
+        APP_SECRET.encode(),
+        request.data,  # Use the raw payload (body) as the data to hash
+        hashlib.sha256
+    ).hexdigest()
+    print(f"the signature is {signature}")
+    return hmac.compare_digest(computed_signature, signature)
     
 app=Flask(__name__)
 

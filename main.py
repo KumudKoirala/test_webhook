@@ -2,9 +2,8 @@ from flask import Flask
 import os 
 TOKEN=os.environ.get("TOKEN")
 APP_SECRET=os.environ.get("APP_SECRET")
-message_to_print=os.environ.get("TOKEN")
+message_to_print=os.environ.get("USER")
 app=Flask(__name__)
-
 @app.route('/')
 def home():
     return(message_to_print)

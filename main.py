@@ -2,7 +2,7 @@ from flask import Flask
 import os 
 TOKEN=os.environ.get("TOKEN")
 APP_SECRET=os.environ.get("APP_SECRET")
-message_to_print="default"
+message_to_print=os.environ.get("TOKEN")
 app=Flask(__name__)
 
 @app.route('/')

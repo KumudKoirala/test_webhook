@@ -1,5 +1,7 @@
 from flask import Flask
-
+import os 
+TOKEN=os.environ.get("TOKEN")
+APP_SECRET=os.environ.get("APP_SECRET")
 message_to_print="Hello"
 app=Flask(__name__)
 

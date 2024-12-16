@@ -20,6 +20,7 @@ def is_x_hub_valid():
         hashlib.sha256
     ).hexdigest()
     print(f"the signature is {signature}")
+    sys.stdout.flush()
     return hmac.compare_digest(computed_signature, signature)
     
 app=Flask(__name__)
@@ -36,6 +37,8 @@ def verify_webhook():
         sys.stdout.flush()
         return request.args.get('hub.challenge')
     else:
+        print('Webhook Not verifed')
+        sys.stdout.flush()
         return 'Bad Request',400
        
 @app.route('/webhook',methods=["POST"])

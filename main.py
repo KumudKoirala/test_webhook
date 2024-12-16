@@ -27,6 +27,7 @@ app=Flask(__name__)
 
 @app.route('/')
 def show_updates():
+    app.logger.info('kumud check')
     return f'<pre>{json.dumps(received_updates, indent=2)}</pre>'
 
 @app.route('/webhook',methods=["GET"])
